@@ -1,0 +1,119 @@
+<div class="container-fluid my-4">
+    <div class="row justify-content-center align-items-center">
+        <!-- SEARCH FILTER -->
+        <div class="row col-auto">
+            <div class="col-auto">
+                <input type="text" class="form-control" [placeholder]="placeholder" [(ngModel)]="searchInput">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" type="submit" (click)="onSearch()">Search <i class="fa-solid fa-magnifying-glass mx-1"></i></button>
+            </div>
+        </div>
+
+        <!-- DATE FILTER -->
+        <div class="row col-auto my-2">
+            <div class="col-auto">
+                <label class="form-label mb-0">Filter by Date:</label>
+            </div>
+            <div class="col-auto">
+                <input type="date" class="form-control" [(ngModel)]="dateInput">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" type="submit" (click)="onFilterDate()">Filter <i class="fa-solid fa-filter mx-1"></i></button>
+            </div>
+        </div>
+
+        <!-- MONTH FILTER -->
+        <div class="row col-auto">
+            <div class="col-auto">
+                <label class="form-label mb-0">Filter by Month:</label>
+            </div>
+            <div class="col-auto">
+                <input type="month" class="form-control" [(ngModel)]="monthInput">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" type="submit" (click)="onFilterMonth()">Filter <i class="fa-solid fa-filter mx-1"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD PERMIT -->
+<div class="row justify-content-center mt-4">
+    <button class="btn btn-success w-25" type="submit" data-bs-toggle="modal" data-bs-target="#addPermitModal"><i class="fa-solid fa-plus"></i> ADD PERMIT</button>
+    <!-- Modal -->
+    <div class="modal fade" id="addPermitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header d-block">
+                    <h3 class="modal-title">Insert {{ title }} Permit</h3>
+                    <p class="modal-subtitle text-muted mb-0">Please insert permit information into the field below.</p>
+                </div>
+                <div class="modal-body">
+                    <form #addPermitForm="ngForm" (ngSubmit)="onAddPermit(addPermitForm)">
+                        <div class="row my-3">
+                            <div class="col">
+                                <label class="form-label">Name of Applicant</label>
+                                <input type="text" class="form-control" name="applicantName" [(ngModel)]="permitData.applicantName" required>
+                            </div>
+                            <div class="col" *ngIf="isInPlantedTrees || isInBamboo">
+                                <label class="form-label">Type of Permit</label>
+                                <input type="text" class="form-control" name="typeOfPermit" [(ngModel)]="permitData.typeOfPermit" required>
+                            </div>
+                            <div class="col" *ngIf="isInWoodCharcoal">
+                                <label class="form-label">WCTP No</label>
+                                <input type="text" class="form-control" name="WCTPNo" [(ngModel)]="permitData.WCTPNo" required>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col" *ngIf="isInPlantedTrees || isInBamboo">
+                                <label class="form-label">Species Cut / Harvested</label>
+                                <input type="text" class="form-control" name="speciesCutHarvest" [(ngModel)]="permitData.speciesCutHarvest" required>
+                            </div>
+                            <div class="col" *ngIf="isInWoodCharcoal">
+                                <label class="form-label">Species Harvested</label>
+                                <input type="text" class="form-control" name="speciesHarvest" [(ngModel)]="permitData.speciesHarvest" required>
+                            </div>
+
+                            <div class="col" *ngIf="isInPlantedTrees">
+                                <label class="form-label">Volume</label>
+                                <input type="text" class="form-control" name="volume" [(ngModel)]="permitData.volume" required>
+                            </div>
+                            <div class="col" *ngIf="isInBamboo">
+                                <label class="form-label">No. of Pieces</label>
+                                <input type="text" class="form-control" name="noOfPieces" [(ngModel)]="permitData.noOfPieces" required>
+                            </div>
+                            <div class="col" *ngIf="isInWoodCharcoal">
+                                <label class="form-label">No. of Sacks</label>
+                                <input type="text" class="form-control" name="noOfSacks" [(ngModel)]="permitData.noOfSacks" required>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col">
+                                <label class="form-label">Date Issued</label>
+                                <input type="date" class="form-control" name="dateIssued" [(ngModel)]="permitData.dateIssued" required>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Date Expired</label>
+                                <input type="date" class="form-control" name="dateExpired" [(ngModel)]="permitData.dateExpired" required>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" aria-label="With textarea" name="address" [(ngModel)]="permitData.address" required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onCancelAddingPermit(addPermitForm)">Cancel</button>
+                            <button type="submit" class="btn btn-success">Add changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<div class="flex-wrapper">
+    <app-navbar class="d-print-none"></app-navbar>
+    <app-filter class="d-print-none" [woodCharcoalPermitArray]="printPermitArray" (woodCharcoalQueryArray)="handleQueryResult($event)" (monthValueForPrint)="handleMonthValue($event)"></app-filter>
+    <app-print-table class="d-none d-print-block" [woodCharcoalPermitArray]="printPermitArray" [woodCharcoalFilteredArray]="filteredPermitArray" [monthValue]="month"></app-print-table>
+
+    <!-- LIST OF DATA IN TABLE -->
+    <div class="mx-4 mt-4 table-responsive d-print-none">
+        <table class="table table-light table-hover table-bordered caption-top">
+            <caption>List of Wood Charcoal Permit</caption>
+            <thead class="table-primary">
+                <tr class="align-middle no-wrap">
+                    <th scope="col">Name of Applicant</th>
+                    <th scope="col">WCTP No</th>
+                    <th scope="col">Species Harvested</th>
+                    <th scope="col">No of Sacks</th>
+                    <th scope="col">Date Issued</th>
+                    <th scope="col">Date Expired</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider" *ngIf="filteredPermitArray.length === 0 || filteredPermitArray == null || filteredPermitArray == undefined; else elseTemplate">
+                <tr *ngFor="let permitData of permitArray">
+                    <td class="align-middle" style="width: 20%;">{{ permitData.applicant_name }}</td>
+                    <td class="no-wrap align-middle">{{ permitData.wctp_no }}</td>
+                    <td class="align-middle">{{ permitData.species_harvest }}</td>
+                    <td class="align-middle">{{ permitData.no_of_sacks }}</td>
+                    <td class="no-wrap align-middle">{{ permitData.date_issued | date }}</td>
+                    <td class="no-wrap align-middle">{{ permitData.date_expired | date }}</td>
+                    <td class="align-middle">{{ permitData.address }}</td>
+                    <td class="no-wrap align-middle text-center px-1 mx-0">
+                        <button type="button" class="btn btn-primary btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#updatePermitModal" (click)="displayUpdateModal(permitData)"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteWoodCharcoalDocument(permitData.id)"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+            <ng-template #elseTemplate>
+                <tbody class="table-group-divider">
+                    <tr *ngFor="let permitData of filteredPermitArray">
+                        <td class="align-middle" style="width: 20%;">{{ permitData.applicant_name }}</td>
+                        <td class="no-wrap align-middle">{{ permitData.wctp_no }}</td>
+                        <td class="align-middle">{{ permitData.species_harvest }}</td>
+                        <td class="align-middle">{{ permitData.no_of_sacks }}</td>
+                        <td class="no-wrap align-middle">{{ permitData.date_issued | date }}</td>
+                        <td class="no-wrap align-middle">{{ permitData.date_expired | date }}</td>
+                        <td class="align-middle">{{ permitData.address }}</td>
+                        <td class="no-wrap align-middle text-center px-1 mx-0">
+                            <button type="button" class="btn btn-primary btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#updatePermitModal" (click)="displayUpdateModal(permitData)"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm mx-1" (click)="deleteWoodCharcoalDocument(permitData.id)"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </ng-template>
+        </table>
+    </div>
+
+    <!-- PRINT BUTTON -->
+    <div class="row justify-content-end mx-4">
+        <button class="btn btn-info w-25 d-print-none" type="submit" (click)="onPrint()"><i class="fa-solid fa-print"></i> PRINT PERMIT</button>
+    </div>
+
+    <!-- UPDATE PERMIT MODAL -->
+    <div class="row justify-content-center mt-4 d-print-none">
+        <div class="modal fade" id="updatePermitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header d-block">
+                        <h3 class="modal-title">Update Permit</h3>
+                        <p class="modal-subtitle text-muted mb-0">Please update permit information into the field below.</p>
+                    </div>
+                    <div class="modal-body">
+                        <form #updatePermitForm="ngForm" (ngSubmit)="updateWoodCharcoalDocument(updatePermitForm, permitFormData.id)">
+                            <div class="row my-3">
+                                <div class="col">
+                                    <label class="form-label">Name of Applicant</label>
+                                    <input type="text" class="form-control" name="applicantName" [(ngModel)]="permitFormData.applicant_name" required>
+                                </div>
+                                <div class="col">
+                                    <label class="form-label">WCTP No</label>
+                                    <input type="text" class="form-control" name="wctpNo" [(ngModel)]="permitFormData.wctp_no" required>
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <div class="col">
+                                    <label class="form-label">Species Harvested</label>
+                                    <input type="text" class="form-control" name="speciesHarvest" [(ngModel)]="permitFormData.species_harvest" required>
+                                </div>
+                                <div class="col">
+                                    <label class="form-label">No of Sacks</label>
+                                    <input type="text" class="form-control" name="noOfSacks" [(ngModel)]="permitFormData.no_of_sacks" required>
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <div class="col">
+                                    <label class="form-label">Date Issued</label>
+                                    <input type="date" class="form-control" name="dateIssued" [(ngModel)]="dateIssued" required>
+                                </div>
+                                <div class="col">
+                                    <label class="form-label">Date Expired</label>
+                                    <input type="date" class="form-control" name="dateExpired" [(ngModel)]="dateExpired" required>
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <div class="col">
+                                    <label class="form-label">Address</label>
+                                    <textarea class="form-control" aria-label="With textarea" name="address" [(ngModel)]="permitFormData.address" required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" #cancelButton class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-success">Update changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-footer class="d-print-none"></app-footer>
+</div>

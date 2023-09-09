@@ -1,0 +1,12 @@
+th, td {
+    font-size: 14px;
+}
+
+.modal-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+}
+
+.modal-subtitle {
+    font-family: 'Roboto', sans-serif;
+}

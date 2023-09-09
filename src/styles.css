@@ -1,0 +1,28 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #EEEEEE;
+    color: #111111;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media print {
+    @page {
+        margin-top: 1cm;
+        margin-bottom: 1cm;
+        size: landscape;
+        orientation: landscape;
+    }
+}

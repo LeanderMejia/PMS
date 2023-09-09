@@ -1,0 +1,21 @@
+.card {
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px #111111;
+    width: 320px;
+}
+
+.card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+}
+
+.card-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+}
+
+.alert {
+    border-radius: 12px;
+    width: 320px;
+    margin-top: -500px;
+}

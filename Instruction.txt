@@ -1,0 +1,7 @@
+HOST PERMIT MANAGEMENT SYSTEM IN LOCAL NETWORK
+STEP 1: Open Visual Studio Code on your computer
+STEP 2: Open the Project folder
+STEP 3: Click the terminal in the top menu bar then new "New Terminal"
+STEP 4: Run the command to host in local network "ng serve --host <ip address>" in terminal
+The ip address of the router "172.16.50.258"
+Example command "ng serve --host 172.16.50.248"

@@ -1,0 +1,98 @@
+<div class="mx-3 my-2">
+    <!-- HEADING PAGE -->
+    <div class="text-center">
+        <p class="title">{{ title }}</p>
+        <p class="title">for the month of {{ monthValue }}</p>
+    </div>
+    <!-- TABLE DATA -->
+    <table class="caption-top w-100 mx-0">
+        <caption class="text-dark p-2">{{ permitCategory }}</caption>
+        <thead>
+            <tr class="text-center">
+                <th scope="col" class="no-wrap align-middle">No.</th>
+                <th scope="col" class="no-wrap align-middle">Name of Applicant</th>
+
+                <th scope="col" class="no-wrap align-middle" *ngIf="isInPlantedTrees || isInBamboo">Type of Permit</th>
+                <th scope="col" class="no-wrap align-middle" *ngIf="isInWoodCharcoal">WCTP No</th>
+
+                <th scope="col" class="no-wrap align-middle no-wrap" *ngIf="isInPlantedTrees || isInBamboo">Species Cut / Harvested</th>
+                <th scope="col" class="no-wrap align-middle no-wrap" *ngIf="isInWoodCharcoal">Species Harvested</th>
+
+                <th scope="col" class="no-wrap align-middle" *ngIf="isInPlantedTrees">Volume</th>
+                <th scope="col" class="no-wrap align-middle" *ngIf="isInBamboo">No of Pieces</th>
+                <th scope="col" class="no-wrap align-middle" *ngIf="isInWoodCharcoal">No of Sacks</th>
+                
+                <th scope="col" class="no-wrap align-middle no-wrap">Date Issued</th>
+                <th scope="col" class="no-wrap align-middle no-wrap">Date Expired</th>
+                <th scope="col" class="no-wrap align-middle">Address</th>
+                
+            </tr>
+        </thead>
+        <tbody *ngIf="filteredPermitArray.length === 0 || filteredPermitArray == null || filteredPermitArray == undefined; else elseTemplate">
+            <tr *ngFor="let permitData of permitArray; let i = index">
+                <td class="no-wrap align-middle text-center">{{ i + 1 }}</td>
+                <td class="no-wrap align-middle">{{ permitData.applicant_name }}</td>
+
+                <td class="no-wrap align-middle" *ngIf="isInPlantedTrees || isInBamboo">{{ permitData.type_of_permit }}</td>
+                <td class="no-wrap align-middle" *ngIf="isInWoodCharcoal">{{ permitData.wctp_no }}</td>
+
+                <td class="no-wrap align-middle" *ngIf="isInPlantedTrees || isInBamboo">{{ permitData.species_cut_harvest }}</td>
+                <td class="no-wrap align-middle" *ngIf="isInWoodCharcoal">{{ permitData.species_harvest }}</td>
+
+                <td class="align-middle" *ngIf="isInPlantedTrees">{{ permitData.volume }}</td>
+                <td class="no-wrap align-middle" *ngIf="isInBamboo">{{ permitData.no_of_pieces }}</td>
+                <td class="no-wrap align-middle" *ngIf="isInWoodCharcoal">{{ permitData.no_of_sacks }}</td>
+
+                <td class="no-wrap align-middle">{{ permitData.date_issued | date }}</td>
+                <td class="no-wrap align-middle">{{ permitData.date_expired | date }}</td>
+                <td class="align-middle">{{ permitData.address }}</td>
+            </tr>
+        </tbody>
+        <ng-template #elseTemplate>
+            <tbody>
+                <tr *ngFor="let permitData of filteredPermitArray; let i = index">
+                    <td class="no-wrap align-middle text-center">{{ i + 1 }}</td>
+                    <td class="no-wrap align-middle no-wrap">{{ permitData.applicant_name }}</td>
+                    
+                    <td class="no-wrap align-middle" *ngIf="isInPlantedTrees || isInBamboo">{{ permitData.type_of_permit }}</td>
+                    <td class="no-wrap align-middle" *ngIf="isInWoodCharcoal">{{ permitData.wctp_no }}</td>
+                    
+                    <td class="no-wrap align-middle" *ngIf="isInPlantedTrees || isInBamboo">{{ permitData.species_cut_harvest }}</td>
+                    <td class="no-wrap align-middle" *ngIf="isInWoodCharcoal">{{ permitData.species_harvest }}</td>
+                    
+                    <td class="align-middle" *ngIf="isInPlantedTrees">{{ permitData.volume }}</td>
+                    <td class="no-wrap align-middle" *ngIf="isInBamboo">{{ permitData.no_of_pieces }}</td>
+                    <td class="no-wrap align-middle" *ngIf="isInWoodCharcoal">{{ permitData.no_of_sacks }}</td>
+                    
+                    <td class="no-wrap align-middle">{{ permitData.date_issued | date }}</td>
+                    <td class="no-wrap align-middle">{{ permitData.date_expired | date }}</td>
+                    <td class="align-middle">{{ permitData.address }}</td>
+                </tr>
+            </tbody>
+        </ng-template>
+    </table>
+</div>
+
+<div class="mx-4 row justify-content-center align-items-center" *ngIf="router.url === '/wood-charcoal'">
+    <div class="col">
+        <p>Prepared by:</p>
+        <div class="text-center mt-4">
+            <p class="m-0"><b>{{ signatoriesData.rps_staff_name }}</b></p>
+            <p>{{ signatoriesData.rps_staff_position }}</p>
+        </div>
+    </div>
+    <div class="col">
+        <p>Reviewed by:</p>
+        <div class="text-center mt-4">
+            <p class="m-0"><b>{{ signatoriesData.chief_rps_name }}</b></p>
+            <p>{{ signatoriesData.chief_rps_position }}</p>
+        </div>
+    </div>
+    <div class="col">
+        <p>Attested by:</p>
+        <div class="text-center mt-4">
+            <p class="m-0"><b>{{ signatoriesData.cenro_name }}</b></p>
+            <p>{{ signatoriesData.cenro_position }}</p>
+        </div>
+    </div>
+</div>

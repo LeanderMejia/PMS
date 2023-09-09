@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "permit-management-system-79c73": {
+      "hosting": {
+        "PMS": [
+          "permit-management-system-79c73"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "permit-management-system-79c73"
+  }
+}
